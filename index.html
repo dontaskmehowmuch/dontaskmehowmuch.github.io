@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don't Ask Me How Much — price your work honestly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">?</div>
+      <div>
+        <h1>Don't Ask Me How Much</h1>
+        <small>Price what it actually costs to make</small>
+      </div>
+    </div>
+    <div class="topbar-note">Free to use · no ads · nothing leaves your device</div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="dash-head">
+      <h2>Your projects</h2>
+      <button class="btn" onclick="startNewProject()">+ New project</button>
+    </div>
+    <div id="dashboard-content"></div>
+  </div>
+
+  <!-- WIZARD -->
+  <div class="view" id="view-wizard">
+    <div class="wizard-shell">
+      <div>
+        <div class="steps-track" id="steps-track"></div>
+        <div id="step-content"></div>
+        <div class="wizard-nav">
+          <button class="btn-ghost" id="btn-back" onclick="goBack()">← Back</button>
+          <button class="btn" id="btn-next" onclick="goNext()">Continue →</button>
+        </div>
+      </div>
+      <div class="ledger">
+        <h4>Running total</h4>
+        <div id="ledger-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="view" id="view-result">
+    <div style="max-width:520px; margin:0 auto;">
+      <div class="stamp-wrap">
+        <div class="stamp" id="stamp">
+          <div class="label">Suggested retail</div>
+          <div class="amount" id="stamp-price">€0</div>
+          <div class="sub" id="stamp-sub">per piece</div>
+        </div>
+      </div>
+      <div class="profit-note" id="profit-note"></div>
+
+      <div class="ledger" style="margin-top:28px;">
+        <h4>Full breakdown</h4>
+        <div id="result-breakdown"></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-ghost" onclick="editCurrentProject()">Edit inputs</button>
+        <button class="btn" onclick="saveAndReturn()">Save project</button>
+      </div>
+    </div>
+  </div>
+  <!-- SUPPORT -->
+  <div class="view" id="view-support">
+    <div class="support-wrap">
+      <div class="support-cup">☕</div>
+      <h2>Enjoying it?</h2>
+      <p>This app is free to use — no ads, no subscriptions, no accounts collecting your data. If it's saved you time or helped you price something fairly, a coffee is always appreciated. Totally optional, never required.</p>
+      <div class="support-links">
+        <a class="support-link primary" href="https://buymeacoffee.com/yourname" target="_blank" rel="noopener">Buy me a coffee</a>
+        <a class="support-link" href="https://ko-fi.com/yourname" target="_blank" rel="noopener">Support on Ko-fi</a>
+        <a class="support-link" href="https://paypal.me/yourname" target="_blank" rel="noopener">Send via PayPal</a>
+      </div>
+      <p class="support-note">Opens in a new tab. Your saved projects stay exactly where they are.</p>
+      <div style="margin-top:24px;">
+        <button class="btn-ghost" onclick="showView('view-dashboard')">← Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPRESSUM -->
+  <div class="view" id="view-impressum">
+    <div class="impressum-wrap">
+      <h2>Impressum</h2>
+      <p class="impressum-legal">Angaben gemäß § 5 TMG</p>
+
+      <!-- FILL IN: replace every [placeholder] below with your real details. -->
+      <div class="impressum-block">
+        <p>[Vollständiger Name]<br>
+        [Straße und Hausnummer]<br>
+        [PLZ und Ort]<br>
+        [Land]</p>
+      </div>
+
+      <div class="impressum-block">
+        <h3>Kontakt</h3>
+        <p>Telefon: [Telefonnummer]<br>
+        E‑Mail: [E‑Mail‑Adresse]</p>
+      </div>
+
+      <div class="impressum-block">
+        <h3>Umsatzsteuer</h3>
+        <p>[Umsatzsteuer‑Identifikationsnummer gemäß § 27a UStG — oder, falls zutreffend: „Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).“]</p>
+      </div>
+
+      <div class="impressum-block">
+        <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
+        <p>[Name]<br>
+        [Anschrift wie oben]</p>
+      </div>
+
+      <div class="impressum-block">
+        <h3>EU‑Streitschlichtung</h3>
+        <p>Die Europäische Kommission stellt eine Plattform zur Online‑Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>. Unsere E‑Mail‑Adresse finden Sie oben.</p>
+      </div>
+
+      <div class="impressum-block">
+        <h3>Verbraucherstreitbeilegung</h3>
+        <p>[Hinweis, ob Sie zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle bereit oder verpflichtet sind — üblich: „Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.“]</p>
+      </div>
+
+      <div style="margin-top:28px;">
+        <button class="btn-ghost" onclick="showView('view-dashboard')">← Back</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="corner-btn impressum" onclick="showView('view-impressum')">Impressum</button>
+<button class="corner-btn support" onclick="showView('view-support')">☕ Buy me a coffee</button>
+
+<script>
+// ---------- storage helpers ----------
+// Uses the browser's own localStorage — works on any real website, no backend, no account.
+// Data lives only in this browser, on this device. Clearing browser data / switching
+// browsers or devices means the projects won't be there. That's the tradeoff for
+// "nothing leaves your device."
+const STORAGE_KEY = 'claymark_projects_v1';
+async function loadAllProjects(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+async function saveAllProjects(list){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+  catch(e){ console.error('save failed', e); }
+}
+
+// ---------- state ----------
+const TECHNIQUES = ["Wheel-thrown","Hand-built","Mold / slip-cast","Resin-cast","Textile / sewn","Woodwork","Other"];
+const DEFAULT_BUFFER = {
+  "Wheel-thrown": 12, "Hand-built": 10, "Mold / slip-cast": 15,
+  "Resin-cast": 8, "Textile / sewn": 5, "Woodwork": 5, "Other": 10
+};
+
+// Units are grouped into families. You can only convert / compare within the same family
+// (e.g. a bag priced in kg can be "used" in g, but not compared to a fabric priced in m).
+const UNIT_INFO = {
+  kg: { family: 'weight', toBase: 1 },
+  g:  { family: 'weight', toBase: 0.001 },
+  L:  { family: 'volume', toBase: 1 },
+  ml: { family: 'volume', toBase: 0.001 },
+  pc: { family: 'count',  toBase: 1 },
+  m:  { family: 'length', toBase: 1 },
+};
+function unitsForFamily(family){
+  return Object.keys(UNIT_INFO).filter(u => UNIT_INFO[u].family === family);
+}
+
+// Starting materials suggested per technique — a helpful head start, not a requirement.
+const TECHNIQUE_MATERIALS = {
+  "Wheel-thrown":       [ mat("Clay","kg",10), mat("Glaze","L",1) ],
+  "Hand-built":         [ mat("Clay","kg",10), mat("Glaze","L",1) ],
+  "Mold / slip-cast":   [ mat("Casting slip","L",10), mat("Glaze","L",1) ],
+  "Resin-cast":         [ mat("Resin","L",1), mat("Hardener","L",1), mat("Pigment","g",50) ],
+  "Textile / sewn":     [ mat("Fabric","m",1), mat("Thread","pc",1) ],
+  "Woodwork":           [ mat("Wood","m",1) ],
+  "Other":              [ mat("","kg",1) ],
+};
+function mat(name, packageUnit, packageQty){
+  const usedUnit = packageUnit === 'kg' ? 'g' : packageUnit === 'L' ? 'ml' : packageUnit;
+  return { name, packagePrice: 0, packageQty, packageUnit, usedQty: 0, usedUnit };
+}
+function cloneMaterials(technique){
+  return JSON.parse(JSON.stringify(TECHNIQUE_MATERIALS[technique] || TECHNIQUE_MATERIALS["Other"]));
+}
+
+let project = blankProject();
+let step = 0;
+const STEP_COUNT = 4;
+let editingId = null;
+
+function blankProject(){
+  return {
+    id: null,
+    name: "",
+    technique: "Wheel-thrown",
+    hourlyRate: 18,
+    hours: 1,
+    materials: cloneMaterials("Wheel-thrown"),
+    materialsTouched: false,
+    bufferPct: DEFAULT_BUFFER["Wheel-thrown"],
+    markupPct: 100,
+    wholesaleDiscountPct: 50,
+  };
+}
+
+// ---------- calculations ----------
+function materialCost(m){
+  const pInfo = UNIT_INFO[m.packageUnit] || UNIT_INFO.kg;
+  const uInfo = UNIT_INFO[m.usedUnit] || pInfo;
+  const packagePrice = parseFloat(m.packagePrice) || 0;
+  const packageQty = parseFloat(m.packageQty) || 0;
+  const usedQty = parseFloat(m.usedQty) || 0;
+  if(packageQty <= 0) return 0;
+  const pricePerBaseUnit = packagePrice / (packageQty * pInfo.toBase);
+  const usedInBaseUnit = usedQty * uInfo.toBase;
+  return pricePerBaseUnit * usedInBaseUnit;
+}
+function calc(p){
+  const materialsCost = p.materials.reduce((s,m)=> s + materialCost(m), 0);
+  const laborCost = (parseFloat(p.hourlyRate)||0) * (parseFloat(p.hours)||0);
+  const baseCost = materialsCost + laborCost;
+  const bufferAmt = baseCost * ((parseFloat(p.bufferPct)||0)/100);
+  const totalCost = baseCost + bufferAmt;
+  const retail = totalCost * (1 + (parseFloat(p.markupPct)||0)/100);
+  const wholesale = retail * (1 - (parseFloat(p.wholesaleDiscountPct)||0)/100);
+  const wholesaleProfit = wholesale - totalCost;
+  const retailProfit = retail - totalCost;
+  return { materialsCost, laborCost, baseCost, bufferAmt, totalCost, retail, wholesale, wholesaleProfit, retailProfit };
+}
+function money(n){
+  if(isNaN(n)) n = 0;
+  return "€" + n.toFixed(2);
+}
+
+// ---------- dashboard ----------
+async function renderDashboard(){
+  const list = await loadAllProjects();
+  const el = document.getElementById('dashboard-content');
+  if(list.length === 0){
+    el.innerHTML = `<div class="empty">
+      <p>No projects yet. Price your first piece to see it here.</p>
+      <button class="btn" onclick="startNewProject()">+ New project</button>
+    </div>`;
+    return;
+  }
+  el.innerHTML = `<div class="project-grid">` + list.map(p=>{
+    const c = calc(p);
+    return `<div class="p-card" onclick="openProject('${p.id}')">
+      <div class="p-card-top">
+        <div>
+          <h3>${escapeHtml(p.name || "Untitled piece")}</h3>
+          <div class="technique">${escapeHtml(p.technique)}</div>
+        </div>
+      </div>
+      <div class="p-card-prices">
+        <div><span>Retail</span><b>${money(c.retail)}</b></div>
+        <div><span>Wholesale</span><b>${money(c.wholesale)}</b></div>
+      </div>
+      <div class="p-card-actions">
+        <button class="btn-danger-ghost" onclick="event.stopPropagation(); deleteProject('${p.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function escapeHtml(s){
+  return (s||"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function openProject(id){
+  const list = await loadAllProjects();
+  const p = list.find(x=>x.id===id);
+  if(!p) return;
+  project = JSON.parse(JSON.stringify(p));
+  editingId = id;
+  showResult();
+}
+
+async function deleteProject(id){
+  let list = await loadAllProjects();
+  list = list.filter(x=>x.id!==id);
+  await saveAllProjects(list);
+  renderDashboard();
+}
+
+function startNewProject(){
+  project = blankProject();
+  editingId = null;
+  step = 0;
+  showView('view-wizard');
+  renderStep();
+}
+
+function editCurrentProject(){
+  step = 0;
+  showView('view-wizard');
+  renderStep();
+}
+
+// ---------- view switching ----------
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='view-dashboard') renderDashboard();
+}
+
+// ---------- wizard ----------
+function renderSteps(){
+  const track = document.getElementById('steps-track');
+  track.innerHTML = "";
+  for(let i=0;i<STEP_COUNT;i++){
+    const t = document.createElement('div');
+    t.className = 'tick' + (i<step ? ' done' : (i===step ? ' current' : ''));
+    track.appendChild(t);
+  }
+}
+
+function renderStep(){
+  renderSteps();
+  const el = document.getElementById('step-content');
+  document.getElementById('btn-back').style.visibility = step===0 ? 'hidden' : 'visible';
+  document.getElementById('btn-next').textContent = step===STEP_COUNT-1 ? 'See suggested price →' : 'Continue →';
+
+  if(step===0){
+    el.innerHTML = `
+      <div class="step-label">Step 1 of ${STEP_COUNT}</div>
+      <div class="step-title">What are you pricing?</div>
+      <div class="step-help">Give the piece a name and pick the technique — it sets a sensible default breakage/waste buffer later, which you can always override.</div>
+      <div class="field">
+        <label for="f-name">Project name</label>
+        <input type="text" id="f-name" placeholder="e.g. Heart-shaped vase, 50-piece order" value="${escapeHtml(project.name)}">
+      </div>
+      <div class="field">
+        <label>Technique</label>
+        <div class="technique-chips" id="chip-group">
+          ${TECHNIQUES.map(t=>`<button type="button" class="chip ${t===project.technique?'selected':''}" data-t="${t}">${t}</button>`).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('f-name').addEventListener('input', e=>{ project.name = e.target.value; updateLedger(); });
+    document.querySelectorAll('#chip-group .chip').forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        project.technique = chip.dataset.t;
+        project.bufferPct = DEFAULT_BUFFER[chip.dataset.t] ?? project.bufferPct;
+        // Give a fresh, untouched project a sensible material starting point for the technique.
+        // Never overwrite materials the person has already filled in.
+        if(!editingId && !project.materialsTouched){
+          project.materials = cloneMaterials(project.technique);
+        }
+        renderStep();
+        updateLedger();
+      });
+    });
+  }
+
+  if(step===1){
+    el.innerHTML = `
+      <div class="step-label">Step 2 of ${STEP_COUNT}</div>
+      <div class="step-title">Your time</div>
+      <div class="step-help">What you'd pay yourself per hour, and how many hours this piece actually takes — from prep to finishing.</div>
+      <div class="row-2">
+        <div class="field">
+          <label for="f-rate">Hourly rate</label>
+          <input type="number" id="f-rate" min="0" step="0.5" value="${project.hourlyRate}">
+          <div class="hint">What an hour of your work is worth</div>
+        </div>
+        <div class="field">
+          <label for="f-hours">Hours on this piece</label>
+          <input type="number" id="f-hours" min="0" step="0.25" value="${project.hours}">
+          <div class="hint">Making + prep + finishing</div>
+        </div>
+      </div>
+    `;
+    document.getElementById('f-rate').addEventListener('input', e=>{ project.hourlyRate = e.target.value; updateLedger(); });
+    document.getElementById('f-hours').addEventListener('input', e=>{ project.hours = e.target.value; updateLedger(); });
+  }
+
+  if(step===2){
+    el.innerHTML = `
+      <div class="step-label">Step 3 of ${STEP_COUNT}</div>
+      <div class="step-title">Materials</div>
+      <div class="step-help">Enter what you actually paid for the package, and how much of it this one piece used — the app works out the real cost. A 10kg bag of clay at €25 that this piece used 50g of costs you €0.13, not €25.</div>
+      <div class="mat-list" id="mat-list"></div>
+      <button type="button" class="add-material" onclick="addMaterialRow()">+ Add material</button>
+    `;
+    renderMaterials();
+  }
+
+  if(step===3){
+    el.innerHTML = `
+      <div class="step-label">Step 4 of ${STEP_COUNT}</div>
+      <div class="step-title">Buffer & margin</div>
+      <div class="step-help">The buffer covers breakage, waste, and mistakes. The markup is what turns cost into a retail price. Wholesale discount is what you'd offer a shop or studio buying in bulk.</div>
+      <div class="field">
+        <label for="f-buffer">Waste / breakage buffer</label>
+        <input type="number" id="f-buffer" min="0" step="1" value="${project.bufferPct}">
+        <div class="hint">% added on top of cost — default for ${escapeHtml(project.technique)} is ${DEFAULT_BUFFER[project.technique] ?? 10}%</div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="f-markup">Retail markup</label>
+          <input type="number" id="f-markup" min="0" step="5" value="${project.markupPct}">
+          <div class="hint">% on top of total cost</div>
+        </div>
+        <div class="field">
+          <label for="f-wholesale">Wholesale discount</label>
+          <input type="number" id="f-wholesale" min="0" max="90" step="5" value="${project.wholesaleDiscountPct}">
+          <div class="hint">% off retail for bulk buyers</div>
+        </div>
+      </div>
+    `;
+    document.getElementById('f-buffer').addEventListener('input', e=>{ project.bufferPct = e.target.value; updateLedger(); });
+    document.getElementById('f-markup').addEventListener('input', e=>{ project.markupPct = e.target.value; updateLedger(); });
+    document.getElementById('f-wholesale').addEventListener('input', e=>{ project.wholesaleDiscountPct = e.target.value; updateLedger(); });
+  }
+
+  updateLedger();
+}
+
+function renderMaterials(){
+  const wrap = document.getElementById('mat-list');
+  wrap.innerHTML = project.materials.map((m,i)=>{
+    const family = (UNIT_INFO[m.packageUnit] || UNIT_INFO.kg).family;
+    const usedUnitOptions = unitsForFamily(family);
+    const cost = materialCost(m);
+    return `
+      <div class="mat-card" data-i="${i}">
+        <div class="mat-card-top">
+          <div class="mfield" style="flex:1;">
+            <label for="mat-name-${i}">Material</label>
+            <input type="text" id="mat-name-${i}" placeholder="e.g. Stoneware clay" value="${escapeHtml(m.name)}" oninput="updateMat(${i},'name',this.value)">
+          </div>
+          <button type="button" class="remove-row" onclick="removeMaterialRow(${i})" aria-label="Remove this material">×</button>
+        </div>
+        <div class="mat-grid">
+          <div class="mfield">
+            <label for="mat-pprice-${i}">Package price (€)</label>
+            <input type="number" id="mat-pprice-${i}" min="0" step="0.01" placeholder="0.00" value="${m.packagePrice}" oninput="updateMat(${i},'packagePrice',this.value)">
+          </div>
+          <div class="mfield">
+            <label for="mat-psize-${i}">Package size</label>
+            <div class="qty-unit">
+              <input type="number" id="mat-psize-${i}" min="0" step="0.1" value="${m.packageQty}" aria-label="Package quantity" oninput="updateMat(${i},'packageQty',this.value)">
+              <select id="mat-punit-${i}" aria-label="Package unit" onchange="updatePackageUnit(${i}, this.value)">
+                ${Object.keys(UNIT_INFO).map(u=>`<option value="${u}" ${u===m.packageUnit?'selected':''}>${u}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="mfield">
+            <label for="mat-used-${i}">Used in this piece</label>
+            <div class="qty-unit">
+              <input type="number" id="mat-used-${i}" min="0" step="0.1" value="${m.usedQty}" aria-label="Quantity used in this piece" oninput="updateMat(${i},'usedQty',this.value)">
+              <select id="mat-uunit-${i}" aria-label="Unit used" onchange="updateMat(${i},'usedUnit',this.value)">
+                ${usedUnitOptions.map(u=>`<option value="${u}" ${u===m.usedUnit?'selected':''}>${u}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="mat-cost">→ ${money(cost)} for this piece</div>
+      </div>
+    `;
+  }).join('');
+}
+function updateMat(i, field, val){
+  project.materials[i][field] = val;
+  project.materialsTouched = true;
+  refreshMaterialCost(i);
+  updateLedger();
+}
+function refreshMaterialCost(i){
+  const el = document.querySelector(`.mat-card[data-i="${i}"] .mat-cost`);
+  if(el) el.textContent = `→ ${money(materialCost(project.materials[i]))} for this piece`;
+}
+function updatePackageUnit(i, val){
+  project.materials[i].packageUnit = val;
+  // keep the "used" unit in the same family as the package unit (e.g. a kg bag can be used in g, not ml)
+  const family = UNIT_INFO[val].family;
+  const options = unitsForFamily(family);
+  if(!options.includes(project.materials[i].usedUnit)){
+    project.materials[i].usedUnit = val === 'kg' ? 'g' : val === 'L' ? 'ml' : val;
+  }
+  project.materialsTouched = true;
+  renderMaterials();
+  updateLedger();
+}
+function addMaterialRow(){
+  project.materials.push(mat("", "kg", 1));
+  project.materialsTouched = true;
+  renderMaterials();
+  updateLedger();
+}
+function removeMaterialRow(i){
+  if(project.materials.length===1) return;
+  project.materials.splice(i,1);
+  project.materialsTouched = true;
+  renderMaterials();
+  updateLedger();
+}
+
+function updateLedger(){
+  const c = calc(project);
+  const el = document.getElementById('ledger-content');
+  el.innerHTML = `
+    <div class="ledger-line"><span>Materials</span><b>${money(c.materialsCost)}</b></div>
+    <div class="ledger-line"><span>Labor (${project.hours||0}h × ${money(project.hourlyRate||0)})</span><b>${money(c.laborCost)}</b></div>
+    <div class="ledger-line"><span>Buffer (${project.bufferPct||0}%)</span><b>${money(c.bufferAmt)}</b></div>
+    <div class="ledger-line total"><span>True cost</span><b>${money(c.totalCost)}</b></div>
+    <div class="ledger-line total" style="margin-top:10px;"><span>Suggested retail</span><b>${money(c.retail)}</b></div>
+    <div class="ledger-line"><span>Suggested wholesale</span><b>${money(c.wholesale)}</b></div>
+  `;
+}
+
+function goNext(){
+  if(step < STEP_COUNT - 1){
+    step++;
+    renderStep();
+  } else {
+    showResult();
+  }
+}
+function goBack(){
+  if(step > 0){
+    step--;
+    renderStep();
+  }
+}
+
+// ---------- result ----------
+function showResult(){
+  showView('view-result');
+  const c = calc(project);
+  document.getElementById('stamp-price').textContent = money(c.retail);
+  document.getElementById('stamp-sub').textContent = project.name || "per piece";
+
+  const note = document.getElementById('profit-note');
+  if(c.wholesaleProfit < 0){
+    note.className = "profit-note warn";
+    note.innerHTML = `⚠ At this wholesale discount you'd lose <b>${money(Math.abs(c.wholesaleProfit))}</b> per piece. Consider a smaller discount or higher markup.`;
+  } else {
+    note.className = "profit-note";
+    note.innerHTML = `That's <b>${money(c.retailProfit)}</b> profit at retail, <b>${money(c.wholesaleProfit)}</b> at wholesale.`;
+  }
+
+  document.getElementById('result-breakdown').innerHTML = `
+    <div class="ledger-line"><span>Materials cost</span><b>${money(c.materialsCost)}</b></div>
+    <div class="ledger-line"><span>Labor cost</span><b>${money(c.laborCost)}</b></div>
+    <div class="ledger-line"><span>Waste/breakage buffer</span><b>${money(c.bufferAmt)}</b></div>
+    <div class="ledger-line total"><span>True cost per piece</span><b>${money(c.totalCost)}</b></div>
+    <div class="ledger-line" style="margin-top:10px;"><span>Retail price</span><b>${money(c.retail)}</b></div>
+    <div class="ledger-line"><span>Wholesale price</span><b>${money(c.wholesale)}</b></div>
+    <div class="ledger-line"><span>Profit at retail</span><b>${money(c.retailProfit)}</b></div>
+    <div class="ledger-line"><span>Profit at wholesale</span><b>${money(c.wholesaleProfit)}</b></div>
+  `;
+}
+
+async function saveAndReturn(){
+  let list = await loadAllProjects();
+  if(!project.id) project.id = 'p_' + Date.now();
+  const idx = list.findIndex(p=>p.id===project.id);
+  if(idx>=0) list[idx] = project; else list.push(project);
+  await saveAllProjects(list);
+  showView('view-dashboard');
+}
+
+// ---------- init ----------
+renderDashboard();
+</script>
+</body>
+</html>
